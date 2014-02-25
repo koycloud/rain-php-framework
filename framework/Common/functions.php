@@ -94,6 +94,16 @@ function mkdirs($dir, $mode = 0700)
 				unset($dirArr);
 				return $ret;
 			}
+			else
+			{
+				if (substr($tmp, strlen($tmp) - 1) == '/')
+					$f = $tmp.'index.html';
+				else
+					$f = $tmp.'/'.'index.html';
+
+				if (!file_exists($f) &&  !file_exists(RUNTIME_PATH.'build.lock'))
+					file_put_contents($f, '');
+			}
 		}
 	}
 	unset($dirArr);
