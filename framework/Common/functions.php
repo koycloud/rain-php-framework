@@ -53,6 +53,20 @@ function delc($name)
 	return setcookie ($name, '', time() - 3600);
 }
 
+//get path if parameter is true return url path else return file real path default true
+//if some errors find return false else return string
+function getpath($path, $p = true)
+{
+	if ($p)
+	{
+		if (!is_dir($path) && !is_file($path))
+			return false;
+		return str_replace(APP_PATH, SITE_URL, $path);
+	}
+	else
+		return str_replace(SITE_URL, APP_PATH, $path);
+}
+
 //this function use for making directories
 //if success return true else return false
 //note: this function parameter need  the absolute address
@@ -282,12 +296,21 @@ function build()
 		$ret = mkdirs($path.'/'.APP_NAME.'/Static/css');
 	if (!$ret)
 		return false;
+	if (!is_dir($path.'/'.APP_NAME.'/Static/images'))
+		$ret = mkdirs($path.'/'.APP_NAME.'/Static/images');
+	if (!$ret)
+		return false;
 	if (!is_dir($path.'/'.APP_NAME.'/Lib/Action'))
 		$ret = mkdirs($path.'/'.APP_NAME.'/Lib/Action');
 	if (!$ret)
 		return false;
 	if (!is_dir($path.'/'.APP_NAME.'/Lib/Model'))
 		$ret = mkdirs($path.'/'.APP_NAME.'/Lib/Model');
+	if (!$ret)
+		return false;
+
+	if (!is_dir($path.'/'.APP_NAME.'/uploads/'))
+		$ret = mkdirs($path.'/'.APP_NAME.'/uploads/');
 	if (!$ret)
 		return false;
 
