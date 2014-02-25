@@ -1,7 +1,6 @@
 <?php
 //rain framework create time 2014-02-13 by Rain
 error_reporting(0);
-session_start();
 //记录开始运行时间
 $GLOBALS['_beginTime'] = microtime(TRUE);
 $GLOBALS['_SQLCount'] = 0;

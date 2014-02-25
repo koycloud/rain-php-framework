@@ -513,6 +513,15 @@ function compress_html($string) {
     return preg_replace($pattern, $replace, $string);
 }
 
+function check_code($name)
+{
+	if (!isset($_SESSION['code']))
+		return false;
+	$s_code = $_SESSION['code'];
+	unset($_SESSION['code']);
+	return (strtolower(trim($_REQUEST[$name])) == $s_code);
+}
+
 function shutdown_function($req)
 {
 	$e = error_get_last();

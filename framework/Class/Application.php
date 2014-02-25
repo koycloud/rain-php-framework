@@ -9,7 +9,19 @@ class Application
 	public static function run()
 	{
 		self::init();
+		self::session();
 		self::parseurl();
+	}
+
+	private static function session()
+	{
+		//init session save type
+		if (extension_loaded('memcache'))
+		{
+			ini_set('session.save_handler', 'memcache');
+			ini_set('session.save_path', 'tcp://'.C('memcache-host').':'.C('memcache-port'));
+		}
+		session_start();
 	}
 
 	private static function init()
