@@ -35,6 +35,7 @@ defined('RUNTIME_PATH') or define('RUNTIME_PATH', APP_PATH.APP_NAME.'/Runtime/')
 defined('RUNTIME_CACHE') or define('RUNTIME_CACHE', APP_PATH.APP_NAME.'/Runtime/Cache/');
 defined('RUNTIME_DATA') or define('RUNTIME_DATA', APP_PATH.APP_NAME.'/Runtime/Data/');
 defined('CONFIG_FILE') or define('CONFIG_FILE', FRAMEWORK_PATH.'config.php');
+defined('FONTS_PATH') or define('FONTS_PATH', FRAMEWORK_PATH.'fonts/');
 defined('ADMIN_EMAIL') or define('ADMIN_EMAIL', '563268276@qq.com');
 defined('CREATE_DEMO') or define('CREATE_DEMO', true);
 defined('OPEN_TOKEN') or define('OPEN_TOKEN', true);
