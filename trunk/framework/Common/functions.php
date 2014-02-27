@@ -70,7 +70,7 @@ function getpath($path, $p = true)
 //this function use for making directories
 //if success return true else return false
 //note: this function parameter need  the absolute address
-function mkdirs($dir, $mode = 0700)
+function mkdirs($dir, $need_file = false, $mode = 0700)
 {
 	$dir = str_replace("\\", '/', $dir);
 	if (is_dir($dir))
@@ -101,7 +101,7 @@ function mkdirs($dir, $mode = 0700)
 				else
 					$f = $tmp.'/'.'index.html';
 
-				if (!file_exists($f) &&  !file_exists(RUNTIME_PATH.'build.lock'))
+				if ((!file_exists($f) &&  !file_exists(RUNTIME_PATH.'build.lock')) || $need_file)
 					file_put_contents($f, '');
 			}
 		}
