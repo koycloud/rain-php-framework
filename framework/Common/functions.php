@@ -510,7 +510,7 @@ function load_tpl($tpl, $open_token = true)
 				unset($tArr);
 			}
 		}
-		$content = preg_replace('/<\{\$(.*?)\}>/i', '<?php echo \$${1}; ?>', $content);
+		$content = preg_replace('/<\{\s*\$(.*?)\}>/i', '<?php echo \$${1}; ?>', $content);
 		$content = preg_replace('/\{\s*u(.*?)\}/i', '<?php echo U${1}; ?>', $content);
 		$content = preg_replace('/<\{\s*if\s*(.*?)\s*\}>/i', '<?php if(${1}) { ?>', $content);
 		$content = preg_replace('/<\{\s*else\s*if\s*(.*?)\s*\}>/i', '<?php } elseif(${1}) { ?>', $content);
@@ -520,6 +520,7 @@ function load_tpl($tpl, $open_token = true)
 		$content = preg_replace('/<\{\s*\/loop\s*\}>/i', '<?php } ?>', $content);
 		$content = preg_replace('/<\{\s*foreach(.*?)\s*\}>/i', '<?php foreach${1} { ?>', $content);
 		$content = preg_replace('/<\{\s*\/foreach\s*\}>/i', '<?php } ?>', $content);
+		$content = preg_replace('/<\{\s*(.*?)\}>/i', '<?php echo ${1}; ?>', $content);
 		$content = compress_html($content);
 		file_put_contents($cache_file, $content);
 	}
