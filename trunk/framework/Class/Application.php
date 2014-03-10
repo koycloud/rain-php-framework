@@ -45,6 +45,9 @@ class Application
 			$method = 'index';
 		}
 
+		if (isset($_REQUEST['app']) && !defined('APP_NAME'))
+			define('APP_NAME', trim($_REQUEST['app']));
+
 		if (CREATE_DEMO)
 		{
 			//if need create demo

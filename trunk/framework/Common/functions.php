@@ -414,12 +414,19 @@ function my_autoload($classname)
 }
 
 //if success return url else return false
-function U($act, $param = null)
+function U($act, $param = null, $app = null, $domain = null)
 {
+	if (is_null($app))
+		$app = APP_NAME;
+	if (is_null($domain))
+		$domain = SITE_URL;
+	if (stripos($domain, 'http') === false)
+		$domain = 'http://'.$domain;
+
 	$act = trim($act);
 	if (strlen($act) < 1)
 		return false;
-	$ret = SITE_URL;
+	$ret = $domain.$app.'/';
 	$ret .= strtoupper(substr($act, 0, 1)).substr($act, 1).'/';
 	if (is_array($param) && !empty($param))
 	{
