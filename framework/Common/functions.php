@@ -450,6 +450,7 @@ function location($url = SITE_URL, $time = 0, $msg = '')
 		}
 		else
 		{
+			header("Content-type: text/html; charset=utf-8");
             header("refresh:{$time};url={$url}");
             echo($msg);
         }
@@ -457,7 +458,7 @@ function location($url = SITE_URL, $time = 0, $msg = '')
 	}
 	else
 	{
-        $str = "<meta http-equiv='Refresh' content='{$time};URL={$url}'>";
+        $str = "<meta http-equiv='Content-Type' content='text/html; charset=utf-8' /><meta http-equiv='Refresh' content='{$time};URL={$url}'>";
         if ($time != 0)
             $str .= $msg;
         exit($str);
@@ -488,7 +489,7 @@ function load_tpl($tpl, $open_token = true)
 			$token_key .= $k;
 		}
 		$token_key = md5($token_key);
-		if ($open_token && count($_POST))
+		if ($open_token)
 		{
 			if (!isset($_SESSION[$token_key]) || !isset($_SESSION[HIDDEN_TOKEN_NAME]) || !isset($_SESSION[$_SESSION[HIDDEN_TOKEN_NAME]]))
 			{
@@ -561,6 +562,51 @@ function check_code($name)
 	$s_code = $_SESSION['code'];
 	unset($_SESSION['code']);
 	return (strtolower(trim($_REQUEST[$name])) == $s_code);
+}
+
+function admin_md5($str)
+{
+	return md5(md5(md5($str)));
+}
+
+//check ok return $str else return false
+function get_word($str, $chinese = true)
+{
+	if ($chinese)
+	{
+		if (preg_match('/^[\x{4e00}-\x{9fa5}A-Za-z0-9_]+$/u', $str))
+			return $str;
+		else
+			return false;
+	}
+	else
+	{
+		if (preg_match('/^[A-Za-z0-9_]+$/i', $str))
+			return $str;
+		else
+			return false;
+	}
+}
+
+function check_data($data, $type = 'post')
+{
+	if ('post' == $type)
+	{
+		foreach ($data as $v)
+		{
+			if (!isset($_POST[$v]))
+				return false;
+		}
+	}
+	else
+	{
+		foreach ($data as $v)
+		{
+			if (!isset($_GET[$v]))
+				return false;
+		}
+	}
+	return true;
 }
 
 function shutdown_function($req)

@@ -7,28 +7,32 @@ class Action
 	public $tpl = null;
 	public $open_token = null;
 
-	public function set($name, $val)
+	protected function set($name, $val)
+	{
+		Application::$controller_obj->valArr[$name] = $val;
+		unset($val);
+	}
+
+	protected function checktoken()
 	{
 		if (count($_POST) && Application::$controller_obj->open_token && count($_REQUEST) && isset($_SESSION[HIDDEN_TOKEN_NAME]) && isset($_SESSION[$_SESSION[HIDDEN_TOKEN_NAME]]))
 		{
 			if (!isset($_REQUEST[HIDDEN_TOKEN_NAME]))
-				die('token not find');
+				return false;
 			$val2 = trim($_REQUEST[HIDDEN_TOKEN_NAME]);
 			if ($val2 != $_SESSION[$_SESSION[HIDDEN_TOKEN_NAME]])
 			{
 				unset($_SESSION[$_SESSION[HIDDEN_TOKEN_NAME]]);
 				unset($_SESSION[HIDDEN_TOKEN_NAME]);
-				die('token error');
+				return false;
 			}
 			unset($_SESSION[$_SESSION[HIDDEN_TOKEN_NAME]]);
 			unset($_SESSION[HIDDEN_TOKEN_NAME]);
 		}
-
-		Application::$controller_obj->valArr[$name] = $val;
-		unset($val);
+		return true;
 	}
 
-	public function display($tpl = null)
+	protected function display($tpl = null)
 	{
 		if (is_null($tpl))
 			$tpl = $this->method;

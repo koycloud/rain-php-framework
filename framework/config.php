@@ -5,6 +5,7 @@ array(
 		'dsn' => 'mysql:host=127.0.0.1;dbname=testdb;charset=utf8',
 		'un' => 'root',
 		'pw' => '123456',
+		'pre' => 'tb_',
 	),
 
 	'memcache' => array(
